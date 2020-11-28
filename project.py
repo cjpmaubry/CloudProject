@@ -1,7 +1,32 @@
 import pymongo #pip install pymongo
 import time  
 from flask import Flask, render_template # pip install flask
-from ssh_pymongo import MongoSession # pip install ssh-pymongo
+from ssh_pymongo import SSHTunnelForwarder # pip install ssh-pymongo
+
+
+
+MONGO_HOST = "devicimongodb003.westeurope.cloudapp.azure.com"
+MONGO_USER = "administrateur"
+MONGO_PASS = "fcwP6h3H"
+MONGO_DB = "cloud"
+MONGO_COLLECTION_USERS = "users"
+MONGO_COLLECTION_POSTS = "posts"
+
+server = SSHTunnelForwarder(
+    MONGO_HOST,
+    ssh_username=MONGO_USER,
+    ssh_password=MONGO_PASS,
+    remote_bind_address=(MONGO_DB, 22)
+)
+
+def launchQuery(resquestNumber):
+    server.start()
+    client = pymongo.MongoClient(MONGO_HOST, 30000)
+    db = client[MONGO_DB]
+    data = ExecuteQueryNb(db,resquestNumber)
+    server.stop()
+    return data
+
 
 #Define Timer 
 class Timer(object):  
@@ -16,6 +41,21 @@ class Timer(object):
             del self.start_time # Force timer reinit  
 
 app = Flask(__name__)
+
+def executeQueryNb(db,number):
+    data =''
+    if number == 1 :
+        data = db.users.find( {"Id" :X}, {"PostIds" :1, "CommentId" : 1} )
+    if number == 2 :
+        data = db.users.find( {"PostIds" : {"$in" : [X] }}, {"Badges" : 1} )
+    if number == 3 : 
+    if number == 4 :
+    if number == 5 :
+    if number == 6 :
+    if number == 7 :
+    if number == 8 :
+
+    return data
 
 
 @app.route('/')
@@ -40,167 +80,71 @@ def userView():
 def req1():
     timer = Timer()  
     timer.start()
-    data= 'here it is the result of the request'
-    #data= db.Users.find( {"Id" :X}, {"PostIds" :1, "CommentId" : 1} ).pretty() ; 
+    data= launchQuery(1)
     timer.stop()  
     return render_template('req.html',data = data, time = timer.interval )
 
 
 @app.route('/req2')
 def req2():
-    #db.Users.find( {"PostIds" : {"$in" : [X] }}, {"Badges" : 1} ).pretty() ; 
-    return render_template('req.html')
+    timer = Timer()  
+    timer.start()
+    data= launchQuery(2)
+    timer.stop()  
+    return render_template('req.html',data = data, time = timer.interval )
+
 
 
 @app.route('/req3')
 def req3():
-    #db.Posts.find({"Title" : {$regex : "X"}},  { "_id" :0, "Title" : 1}).sort({ "CommentCount" : -1}).pretty(); 
-    #db.Posts.find({"Body" : {$regex : "X"}},  { "_id" :0, "Title" : 1}).sort({ "CommentCount" : -1}).pretty(); 
-    return render_template('req.html')
+    timer = Timer()  
+    timer.start()
+    data= launchQuery(3)
+    timer.stop()  
+    return render_template('req.html',data = data, time = timer.interval )
+
 
 
 @app.route('/req4')
 def req4():
-    #var postUsers = db.Users.find({"Id" : X}, {"PostIds" : 1, "CommentId.PostId" : 1}).pretty();  
-    #var C = postUsers.toArray()  
-    #var Tab = []  
-
-# for (let i = 0; i< C[0]["PostIds"].length; i++) {   
-
-#     Tab.push(NumberInt(C[0]["PostIds"][i]))   
-
-# }  
-
-# for (let i = 0; i< C[0]["CommentId"].length; i++) {   
-
-#     Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))   
-
-# }  
-
-#db.Posts.find({"Id" : {"$in": Tab}, "ClosedDate" : "" },{"Id":1,"Title":1,"Score":1}).sort({ "Score" : -1}).pretty(); 
-    return render_template('req.html')
-
+    timer = Timer()  
+    timer.start()
+    data= launchQuery(4)
+    timer.stop()  
+    return render_template('req.html',data = data, time = timer.interval )
 
 @app.route('/req5')
 def req5():
-    
-#     timeOpen = {  
-
-# $addFields: { timeOpen: {  
-
-# $switch: {  
-
-#         branches: [  
-
-#           { case:  
-
-#               { "ClosedDate" : "" },  
-
-#               then:  
-
-#           {$subtract :  
-
-#               ["$$NOW", {$convert: 
-
-#               { input : "$CreaionDate", to : "date"} } ]}},  
-
-#         ],  
-
-#         default:   
-
-#             {$subtract :  
-
-#                 [ {$convert:  
-
-#                 { input : "$ClosedDate", to : "date"}} 
-
-#             , {$convert: { input : "$CreaionDate", to : "date"}}]}   
-
-#      }  
-
-# } } };  
-
-# db.Posts.aggregate([ {$unwind : "$Tags"},  timeOpen, {  $group :  {  _id : "$Tags", "maxTime" : {$max : "$timeOpen"}  
-# }  },     
-
-# { $project : { "Tags" : 1, 
-
-#     "timeOpen" : 1 
-
-#     ,"maxTime" : 1 
-
-#     }}  
-
-# ]); 
-
-    return render_template('req.html')
-
+    timer = Timer()  
+    timer.start()
+    data= launchQuery(5)
+    timer.stop()  
+    return render_template('req.html',data = data, time = timer.interval )
 
 @app.route('/req6')
 def req6():
-   
-#     db.Users.aggregate( [  
-# {"$unwind" : "$CommentId"},  
-# { $group : {  
-# "_id" : {"Id" : "$Id", "DisplayName" : "$DisplayName", "UpVotes" :  "$UpVotes"} , "totalComment" : {$sum : 1}  }  },  
-# {$project : { 
-# "Id" : "$Id", "DisplayName" : "$DisplayName", "note" : {$sum : ["$_id.UpVotes", "totalComment"] }}},  
-# { $sort : {"note":-1}} ]) ; 
-
-    return render_template('req.html')
+    timer = Timer()  
+    timer.start()
+    data= launchQuery(6)
+    timer.stop()  
+    return render_template('req.html',data = data, time = timer.interval )
 
 
 @app.route('/req7')
 def req7():
-    #var userscount = db.Users.count(); 
-
-# db.Users.aggregate( 
-# [ 
-# {"$unwind" : "$Badges"}, 
-# { $group : { 
-# "_id" : "$Badges.Name", 
-# "countBadge" : {$sum : 1} 
-# } 
-# }, 
-# { $project : { "Badges.Name" : 1, "pourcentage" : {$divide : ["$countBadge", userscount]}}} 
-# ]) ; 
- 
-    return render_template('req.html')
-
+    timer = Timer()  
+    timer.start()
+    data= launchQuery(7)
+    timer.stop()  
+    return render_template('req.html',data = data, time = timer.interval )
 
 @app.route('/req8')
 def req8():
-    
-#     db.UsersAvg.drop() 
-# var B = []  
-# db.Posts.find(  
-# {"Tags" :"prior"},  
-# {"Comments.Id" :1, "_id":0}  
-# ).forEach(function(Comments){B.push(Comments)});   
-# var C = []  
-# for (let i = 0; i< B.length; i++)  
-# {  
-#  for (let j = 0; j<B[i]["Comments"].length; j++) 
-# {  
-#  C.push(NumberInt(B[i]["Comments"][j]["Id"]))  
-# } 
-# }  
-# var Result = db.Users.find( 
-# {"CommentId" : {"$in" :  C},"Age":{"$gt":0}}, 
-# {"Id" : 1,"Age" :1,"_id":0} 
-# );   
-# db.UsersAvg.insert(Result.toArray()) 
-# db.UsersAvg.aggregate(  
-# [ 
-# {  $group :   
-#  {   
-#  _id : null, 
-#  ageAverage : {$avg : "$Age"}   
-#      }   
-# }   
-# ]) ; 
-    
-    return render_template('req.html')
+    timer = Timer()  
+    timer.start()
+    data= launchQuery(8)
+    timer.stop()  
+    return render_template('req.html',data = data, time = timer.interval )
 
 
 if __name__ == "__main__":

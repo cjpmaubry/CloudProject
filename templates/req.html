@@ -3,3 +3,11 @@
 <th>{{data}}</th>
 <br />
 <th>{{time}}</th>
+<br />
+<tbody>
+    {% for x in data %}
+        <tr>
+            <td>{{x}}</td>
+        </tr>
+    {% endfor %}
+</tbody>

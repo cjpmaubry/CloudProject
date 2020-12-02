@@ -1,7 +1,7 @@
 import pymongo #pip install pymongo
 import time  
 from flask import Flask, render_template # pip install flask
-from ssh_pymongo import SSHTunnelForwarder # pip install ssh-pymongo
+from sshtunnel import SSHTunnelForwarder # pip install sshtunnel 
 
 
 
@@ -23,7 +23,7 @@ def launchQuery(resquestNumber):
     server.start()
     client = pymongo.MongoClient(MONGO_HOST, 30000)
     db = client[MONGO_DB]
-    data = ExecuteQueryNb(db,resquestNumber)
+    data = executeQueryNb(db,resquestNumber)
     server.stop()
     return data
 
@@ -45,16 +45,21 @@ app = Flask(__name__)
 def executeQueryNb(db,number):
     data =''
     if number == 1 :
-        data = db.users.find( {"Id" :X}, {"PostIds" :1, "CommentId" : 1} )
+        data = db.users.find({"Id": 7}, {"PostIds": 1,"CommentId": 1})
     if number == 2 :
-        data = db.users.find( {"PostIds" : {"$in" : [X] }}, {"Badges" : 1} )
-    if number == 3 : 
+        data =  ''
+    if number == 3 :
+        data =  ''
     if number == 4 :
+        data =  ''
     if number == 5 :
+        data =  ''
     if number == 6 :
+        data =  ''
     if number == 7 :
+        data =  ''
     if number == 8 :
-
+        data =  ''
     return data
 
 

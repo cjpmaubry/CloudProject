@@ -5,26 +5,42 @@
     <u1>
         <li>
             <a>L’historique des commentaires et des posts pour un utilisateur donné
-            <form action="/req1" method="post">
-                <label for="fname">First name:</label>
-                <input type="text" id="id_user" name="id_user" value="Id">
-                <label for="lname">Last name:</label>
-                <input type="text" id="lname" name="lname" value="Doe">
-                <input type="submit" value="Submit">
-            </form>
+                <form action="/req1" method="post">
+                    <label for="id_user">User Id:</label>
+                    <input type="text" id="id_user" name="id_user" placeholder="Id">
+                    <input type="submit" value="Submit">
+                </form>
             </a>
         </li>
         <br />
         <li>
-            <a href="/req2">Les informations relatives aux badges de l'utilisateur d'un post donné</a>
+            <a>Les informations relatives aux badges de l'utilisateur d'un post donné
+                <form action="/req2" method="post">
+                    <label for="id_user">User Id:</label>
+                    <input type="text" id="id_user" name="id_user" placeholder="Id">
+                    <input type="submit" value="Submit">
+                </form>
+            </a>
         </li>
         <br />
         <li>
-            <a href="/req3">La liste des posts dont le titre ou le corps contient un mot clef donné, trié par le nombre de commentaires associés</a>
+            <a>La liste des posts dont le titre ou le corps contient un mot clef donné, trié par le nombre de commentaires associés</a>
+                <form action="/req3" method="post">
+                    <label for="mot_clef">Mot Clef:</label>
+                    <input type="text" id="mot_clef" name="mot_clef" placeholder="Mot Clef">
+                    <input type="submit" value="Submit">
+                </form>
+            </a>
         </li>
         <br />
         <li>
-            <a href="/req4">La liste des posts actifs pour un utilisateur, trié par le score du post (c’est-à-dire les posts qu'il a créé ou commenté et qui n’ont pas encore été fermés.) </a>
+            <a>La liste des posts actifs pour un utilisateur, trié par le score du post (c’est-à-dire les posts qu'il a créé ou commenté et qui n’ont pas encore été fermés.)
+                <form action="/req4" method="post">
+                    <label for="id_user">User Id:</label>
+                    <input type="text" id="id_user" name="id_user" placeholder="Id">
+                    <input type="submit" value="Submit">
+                </form>
+            </a>
         </li>
     </u1>
 </nav>

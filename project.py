@@ -49,10 +49,10 @@ def executeQueryNb(db,number,parametre):
     if number == 2 :
         data =  db.users.find({"PostIds": {"$in": [int(parametre)] }}, {"Badges": 1})
     if number == 3 :
-        data =  db.posts.find({"Title": {"$regex":parametre}}, {"_id":0,"Title": 1}).sort({"CommentCount": -1})
+        data =  db.posts.find({"Title": {"$regex": parametre }},{"_id":0,"Title": 1}).sort("CommentCount", -1)
     if number == 4 :
         postUsers = db.Users.find({"Id": int(parametre)}, {"PostIds": 1,"CommentId.PostId": 1})
-        C = postUsers.toArray()
+        C = postUsers.toArray() # L'erreur est ici pas possible d'appliqué toArray à un cursor
         Tab = []
         C_len = len(C[0]["PostIds"])
         for i in range(0, C_len):
@@ -62,6 +62,7 @@ def executeQueryNb(db,number,parametre):
             Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))
         data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1})
     if number == 5 :
+        #on ne peut definir timeOpen par lui meme. Faut chercher la syntaxe avec python
         timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input:"$CreaionDate", to:"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input:"$ClosedDate", to:"date"}}, {"$convert": { input:"$CreaionDate", to:"date"}}]}}} } }
         data =  db.posts.aggregate([ {"$unwind":"$Tags"}, timeOpen, {"$group": {_id :"$Tags","maxTime": {"$max":"$timeOpen"} } }, {"$project": {"Tags": 1,"timeOpen": 1 ,"maxTime": 1 }} ])
     if number == 6 :
@@ -73,7 +74,7 @@ def executeQueryNb(db,number,parametre):
         db.UsersAvg.drop()
         B = []
         _posts = db.posts.find({"Tags":parametre}, {"Comments.Id":1,"_id":0})
-        for i in range(len(_posts)):
+        for i in range(len(_posts)): # Un cursor n'est pas un tableau donc on peu pas utiliser len
             B.push(_posts[i]["Comments"])
         #.forEach(function(Comments){B.push(Comments)})
         C = []

@@ -72,15 +72,15 @@ def executeQueryNb(db,number):
     if number == 8 :
         db.UsersAvg.drop()
         B = []
-        db.Posts.find({"Tags" :"prior"}, {"Comments.Id" :1, "_id":0}).forEach(function(Comments){B.push(Comments)})
+        db.Posts.find({"Tags":"prior"}, {"Comments.Id":1,"_id":0}).forEach(function(Comments){B.push(Comments)})
         C = []
         for i in range(0, len(B)):
             B_comments_len = len(B[i]["Comments"])
             for j in range(0, B_comments_len):
                 C.push(NumberInt(B[i]["Comments"][j]["Id"]))
-        Result = db.Users.find({"CommentId" : {"$in" :  C},"Age":{"$gt":0}}, {"Id" : 1,"Age" :1,"_id":0} )
+        Result = db.Users.find({"CommentId": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} )
         db.UsersAvg.insert(Result.toArray())
-        data =  db.UsersAvg.aggregate([{ $group : {_id : null, ageAverage : {$avg : "$Age"}}}])
+        data =  db.UsersAvg.aggregate([{"$group" : {_id : null, ageAverage : {"$avg" :"$Age"}}}])
     return data
 
 
@@ -174,4 +174,4 @@ def req8():
 
 
 if __name__ =="__main__":
-    app.run(debug=True)
+    app.run()

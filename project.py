@@ -49,16 +49,16 @@ def executeQueryNb(db,number):
     if number == 2 :
         data =  db.users.find({"PostIds": {"$in": [X] }}, {"Badges": 1})
     if number == 3 :
-        data =  db.posts.find({"Title": {"$regex" :"X"}}, {"_id" :0,"Title": 1}).sort({"CommentCount": -1}).pretty()
+        data =  db.posts.find({"Title": {"$regex":"X"}}, {"_id":0,"Title": 1}).sort({"CommentCount": -1}).pretty()
     if number == 4 :
         data =  ''
     if number == 5 :
         data =  ''
     if number == 6 :
-        data =  db.users.aggregate([{"$unwind":"$CommentId"}, { "$group" : {"_id": {"Id":"$Id","DisplayName":"$DisplayName","UpVotes":"$UpVotes"} ,"totalComment": {"$sum" : 1}  }  }, {"$project" : {"Id":"$Id","DisplayName":"$DisplayName","note": {"$sum" : ["$_id.UpVotes","totalComment"] }}}, { "$sort" : {"note":-1}} ])
+        data =  db.users.aggregate([{"$unwind":"$CommentId"}, { "$group": {"_id": {"Id":"$Id","DisplayName":"$DisplayName","UpVotes":"$UpVotes"} ,"totalComment": {"$sum": 1}  }  }, {"$project": {"Id":"$Id","DisplayName":"$DisplayName","note": {"$sum": ["$_id.UpVotes","totalComment"] }}}, { "$sort": {"note":-1}} ])
     if number == 7 :
         userscount = db.users.count()
-        data =  db.users.aggregate([{"$unwind":"$Badges"}, { "$group" : {"_id":"$Badges.Name","countBadge": {"$sum" : 1}}}, { "$project" : {"Badges.Name": 1,"pourcentage": {"$divide" : ["$countBadge", userscount]}}}])
+        data =  db.users.aggregate([{"$unwind":"$Badges"}, { "$group": {"_id":"$Badges.Name","countBadge": {"$sum": 1}}}, { "$project": {"Badges.Name": 1,"pourcentage": {"$divide": ["$countBadge", userscount]}}}])
     if number == 8 :
         data =  ''
     return data

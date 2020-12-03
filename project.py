@@ -51,7 +51,7 @@ def executeQueryNb(db,number):
     if number == 3 :
         data =  db.posts.find({"Title": {"$regex":"X"}}, {"_id":0,"Title": 1}).sort({"CommentCount": -1})
     if number == 4 :
-        postUsers = db.Users.find({"Id" : X}, {"PostIds" : 1, "CommentId.PostId" : 1})
+        postUsers = db.Users.find({"Id": X}, {"PostIds": 1,"CommentId.PostId": 1})
         C = postUsers.toArray()
         Tab = []
         C_len = C[0]["PostIds"].length
@@ -60,14 +60,15 @@ def executeQueryNb(db,number):
         C_len2 = C[0]["CommentId"].length
         for i in range(0, C_len2):
             Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))  
-        data =  db.Posts.find({"Id" : {"$in": Tab}, "ClosedDate" : "" },{"Id":1,"Title":1,"Score":1}).sort({ "Score" : -1})
+        data =  db.Posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score" : -1})
     if number == 5 :
-        data =  ''
+        timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input :"$CreaionDate", to :"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input :"$ClosedDate", to :"date"}}, {"$convert": { input :"$CreaionDate", to :"date"}}]}}} } }
+        data =  db.Posts.aggregate([ {"$unwind":"$Tags"}, timeOpen, {"$group" : {_id :"$Tags","maxTime": {"$max":"$timeOpen"} } }, {"$project" : {"Tags": 1,"timeOpen": 1 ,"maxTime": 1 }} ])
     if number == 6 :
-        data =  db.users.aggregate([{"$unwind":"$CommentId"}, { "$group": {"_id": {"Id":"$Id","DisplayName":"$DisplayName","UpVotes":"$UpVotes"} ,"totalComment": {"$sum": 1}  }  }, {"$project": {"Id":"$Id","DisplayName":"$DisplayName","note": {"$sum": ["$_id.UpVotes","totalComment"] }}}, { "$sort": {"note":-1}} ])
+        data =  db.users.aggregate([{"$unwind":"$CommentId"}, {"$group": {"_id": {"Id":"$Id","DisplayName":"$DisplayName","UpVotes":"$UpVotes"} ,"totalComment": {"$sum": 1}  }  }, {"$project": {"Id":"$Id","DisplayName":"$DisplayName","note": {"$sum": ["$_id.UpVotes","totalComment"] }}}, {"$sort": {"note":-1}} ])
     if number == 7 :
         userscount = db.users.count()
-        data =  db.users.aggregate([{"$unwind":"$Badges"}, { "$group": {"_id":"$Badges.Name","countBadge": {"$sum": 1}}}, { "$project": {"Badges.Name": 1,"pourcentage": {"$divide": ["$countBadge", userscount]}}}])
+        data =  db.users.aggregate([{"$unwind":"$Badges"}, {"$group": {"_id":"$Badges.Name","countBadge": {"$sum": 1}}}, {"$project": {"Badges.Name": 1,"pourcentage": {"$divide": ["$countBadge", userscount]}}}])
     if number == 8 :
         data =  ''
     return data

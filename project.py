@@ -10,7 +10,7 @@ MONGO_USER ="administrateur"
 MONGO_PASS ="fcwP6h3H"
 MONGO_DB ="cloud"
 MONGO_COLLECTION_USERS ="users"
-MONGO_COLLECTION_POSTS ="posts"
+MONGO_COLLECTION_posts ="posts"
 
 server = SSHTunnelForwarder(
     MONGO_HOST,
@@ -59,11 +59,11 @@ def executeQueryNb(db,number):
             Tab.push(NumberInt(C[0]["PostIds"][i]))
         C_len2 = len(C[0]["CommentId"])
         for i in range(0, C_len2):
-            Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))  
-        data =  db.Posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1})
+            Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))
+        data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1})
     if number == 5 :
         timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input:"$CreaionDate", to:"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input:"$ClosedDate", to:"date"}}, {"$convert": { input:"$CreaionDate", to:"date"}}]}}} } }
-        data =  db.Posts.aggregate([ {"$unwind":"$Tags"}, timeOpen, {"$group": {_id :"$Tags","maxTime": {"$max":"$timeOpen"} } }, {"$project": {"Tags": 1,"timeOpen": 1 ,"maxTime": 1 }} ])
+        data =  db.posts.aggregate([ {"$unwind":"$Tags"}, timeOpen, {"$group": {_id :"$Tags","maxTime": {"$max":"$timeOpen"} } }, {"$project": {"Tags": 1,"timeOpen": 1 ,"maxTime": 1 }} ])
     if number == 6 :
         data =  db.users.aggregate([{"$unwind":"$CommentId"}, {"$group": {"_id": {"Id":"$Id","DisplayName":"$DisplayName","UpVotes":"$UpVotes"} ,"totalComment": {"$sum": 1}  }  }, {"$project": {"Id":"$Id","DisplayName":"$DisplayName","note": {"$sum": ["$_id.UpVotes","totalComment"] }}}, {"$sort": {"note":-1}} ])
     if number == 7 :
@@ -72,7 +72,10 @@ def executeQueryNb(db,number):
     if number == 8 :
         db.UsersAvg.drop()
         B = []
-        db.Posts.find({"Tags":"prior"}, {"Comments.Id":1,"_id":0}).forEach(function(Comments){B.push(Comments)})
+        _posts = db.posts.find({"Tags":"prior"}, {"Comments.Id":1,"_id":0})
+        for i in range(len(_posts)):
+            B.push(_posts[i]["Comments"])
+        #.forEach(function(Comments){B.push(Comments)})
         C = []
         for i in range(0, len(B)):
             B_comments_len = len(B[i]["Comments"])

@@ -51,7 +51,16 @@ def executeQueryNb(db,number):
     if number == 3 :
         data =  db.posts.find({"Title": {"$regex":"X"}}, {"_id":0,"Title": 1}).sort({"CommentCount": -1})
     if number == 4 :
-        data =  ''
+        postUsers = db.Users.find({"Id" : X}, {"PostIds" : 1, "CommentId.PostId" : 1})
+        C = postUsers.toArray()
+        Tab = []
+        C_len = C[0]["PostIds"].length
+        for i in range(0, C_len):
+            Tab.push(NumberInt(C[0]["PostIds"][i]))
+        C_len2 = C[0]["CommentId"].length
+        for i in range(0, C_len2):
+            Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))  
+        data =  db.Posts.find({"Id" : {"$in": Tab}, "ClosedDate" : "" },{"Id":1,"Title":1,"Score":1}).sort({ "Score" : -1})
     if number == 5 :
         data =  ''
     if number == 6 :

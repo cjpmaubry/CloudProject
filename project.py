@@ -47,7 +47,7 @@ def executeQueryNb(db,number):
     if number == 1 :
         data = db.users.find({"Id": 7}, {"PostIds": 1,"CommentId": 1})
     if number == 2 :
-        data =  ''
+        data =  db.Users.find({"PostIds": {"$in": [X] }}, {"Badges": 1})
     if number == 3 :
         data =  ''
     if number == 4 :

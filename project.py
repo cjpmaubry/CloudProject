@@ -60,7 +60,7 @@ def executeQueryNb(db,number):
         C_len2 = C[0]["CommentId"].length
         for i in range(0, C_len2):
             Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))  
-        data =  db.Posts.find({"Id" : {"$in": Tab}, "ClosedDate" : "" },{"Id":1,"Title":1,"Score":1}).sort({ "Score" : -1})
+        data =  db.Posts.find({"Id": {"$in": Tab}, "ClosedDate": "" },{"Id":1,"Title":1,"Score":1}).sort({ "Score": -1})
     if number == 5 :
         data =  ''
     if number == 6 :

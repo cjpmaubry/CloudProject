@@ -104,73 +104,81 @@ def userView():
 
 @app.route('/req1')
 def req1():
+    query_description =""
     timer = Timer()  
     timer.start()
     data= launchQuery(1)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval )
+    return render_template('req.html',data = data, time = timer.interval, query_decription= query_description)
 
 
 @app.route('/req2')
 def req2():
+    query_description =""
     timer = Timer()  
     timer.start()
     data= launchQuery(2)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval )
+    return render_template('req.html',data = data, time = timer.interval, query_decription= query_description)
 
 
 
 @app.route('/req3')
 def req3():
+    query_description =""
     timer = Timer()  
     timer.start()
     data= launchQuery(3)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval )
+    return render_template('req.html',data = data, time = timer.interval, query_decription= query_description)
 
 
 
 @app.route('/req4')
 def req4():
+    query_description =""
     timer = Timer()  
     timer.start()
     data= launchQuery(4)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval )
+    return render_template('req.html',data = data, time = timer.interval, query_decription= query_description)
 
 @app.route('/req5')
 def req5():
+    query_description =""
     timer = Timer()  
     timer.start()
     data= launchQuery(5)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval )
+    return render_template('req.html',data = data, time = timer.interval, query_decription= query_description)
 
 @app.route('/req6')
 def req6():
+    query_description =""
     timer = Timer()  
     timer.start()
     data= launchQuery(6)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval )
+    return render_template('req.html',data = data, time = timer.interval, query_decription= query_description)
 
 
 @app.route('/req7')
 def req7():
+    query_description =""
     timer = Timer()  
     timer.start()
     data= launchQuery(7)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval )
+    return render_template('req.html',data = data, time = timer.interval, query_decription= query_description)
 
 @app.route('/req8')
 def req8():
+    query_description =""
     timer = Timer()  
     timer.start()
     data= launchQuery(8)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval )
+    return render_template('req.html',data = data, time = timer.interval, query_decription= query_description)
 
 
 if __name__ =="__main__":

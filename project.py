@@ -60,7 +60,11 @@ def executeQueryNb(db,number):
         C_len2 = C[0]["CommentId"].length
         for i in range(0, C_len2):
             Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))  
+<<<<<<< HEAD
         data =  db.Posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score" : -1})
+=======
+        data =  db.Posts.find({"Id": {"$in": Tab}, "ClosedDate": "" },{"Id":1,"Title":1,"Score":1}).sort({ "Score": -1})
+>>>>>>> 4474b783aa8b3237a28c961f07569c5e639f1fcb
     if number == 5 :
         timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input :"$CreaionDate", to :"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input :"$ClosedDate", to :"date"}}, {"$convert": { input :"$CreaionDate", to :"date"}}]}}} } }
         data =  db.Posts.aggregate([ {"$unwind":"$Tags"}, timeOpen, {"$group" : {_id :"$Tags","maxTime": {"$max":"$timeOpen"} } }, {"$project" : {"Tags": 1,"timeOpen": 1 ,"maxTime": 1 }} ])

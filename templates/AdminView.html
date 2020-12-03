@@ -3,21 +3,62 @@
 <h2>Admin View</h2>
 <nav>
     <u1>
-        <li><a href="/req1">L’historique des commentaires et des posts pour un utilisateur donné</a></li>
+        <li>
+            <a>L’historique des commentaires et des posts pour un utilisateur donné</a>
+            <form action="/req1" method="post">
+                <label for="id_user">User Id:</label>
+                <input type="text" id="id_user" name="id_user" placeholder="Id">
+                <input type="submit" value="Submit">
+            </form>
+        </li>
         <br />
-        <li><a href="/req2">Les informations relatives aux badges de l'utilisateur d'un post donné</a></li>
+        <li>
+            <a>Les informations relatives aux badges de l'utilisateur d'un post donné</a>
+            <form action="/req2" method="post">
+                <label for="id_post">Post Id:</label>
+                <input type="text" id="id_post" name="id_post" placeholder="Id">
+                <input type="submit" value="Submit">
+            </form>
+        </li>
         <br />
-        <li><a href="/req3">La liste des posts dont le titre ou le corps contient un mot clef donné, trié par le nombre de commentaires associés</a></li>
+        <li>
+            <a>La liste des posts dont le titre ou le corps contient un mot clef donné, trié par le nombre de commentaires associés</a>
+            <form action="/req3" method="post">
+                <label for="mot_clef">Mot Clef:</label>
+                <input type="text" id="mot_clef" name="mot_clef" placeholder="Mot Clef">
+                <input type="submit" value="Submit">
+            </form>
+        </li>
         <br />
-        <li><a href="/req4">La liste des posts actifs pour un utilisateur, trié par le score du post (c’est-à-dire les posts qu'il a créé ou commenté et qui n’ont pas encore été fermés.) </a></li>
+        <li>
+            <a>La liste des posts actifs pour un utilisateur, trié par le score du post (c’est-à-dire les posts qu'il a créé ou commenté et qui n’ont pas encore été fermés.) </a>
+            <form action="/req4" method="post">
+                <label for="id_user">User Id:</label>
+                <input type="text" id="id_user" name="id_user" placeholder="Id">
+                <input type="submit" value="Submit">
+            </form>
+        </li>
         <br />
-        <li><a href="/req5">Le post ayant la durée d'activité la plus longue par tag (pour le tag 1 c’est le post Y ; pour le tag 2 c’est le post X etc…)   </a></li>
+        <li>
+            <a href="/req5">Le post ayant la durée d'activité la plus longue par tag (pour le tag 1 c’est le post Y ; pour le tag 2 c’est le post X etc…)   </a>
+        </li>
         <br />
-        <li><a href="/req6">L'utilisateur le plus actif en prenant en considération le nombre de votes positifs et le nombre de commentaires  </a></li>
+        <li>
+            <a href="/req6">L'utilisateur le plus actif en prenant en considération le nombre de votes positifs et le nombre de commentaires  </a>
+        </li>
         <br />
-        <li><a href="/req7">Le pourcentage d’obtention de chaque badge </a></li>
+        <li>
+            <a href="/req7">Le pourcentage d’obtention de chaque badge </a>
+        </li>
         <br />
-        <li><a href="/req8">L’âge moyen des utilisateurs commentant les posts d’un certain tag</a></li>
+        <li>
+            <a>L’âge moyen des utilisateurs commentant les posts d’un certain tag</a>
+            <form action="/req8" method="post">
+                <label for="tag">Tag:</label>
+                <input type="text" id="tag" name="tag" placeholder="Tag">
+                <input type="submit" value="Submit">
+            </form>
+        </li>
     </u1>
 </nav>
 {% endblock %}

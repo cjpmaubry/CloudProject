@@ -54,10 +54,10 @@ def executeQueryNb(db,number):
         postUsers = db.Users.find({"Id": X}, {"PostIds": 1,"CommentId.PostId": 1})
         C = postUsers.toArray()
         Tab = []
-        C_len = C[0]["PostIds"].length
+        C_len = len(C[0]["PostIds"])
         for i in range(0, C_len):
             Tab.push(NumberInt(C[0]["PostIds"][i]))
-        C_len2 = C[0]["CommentId"].length
+        C_len2 = len(C[0]["CommentId"])
         for i in range(0, C_len2):
             Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))  
 <<<<<<< HEAD
@@ -74,7 +74,17 @@ def executeQueryNb(db,number):
         userscount = db.users.count()
         data =  db.users.aggregate([{"$unwind":"$Badges"}, {"$group": {"_id":"$Badges.Name","countBadge": {"$sum": 1}}}, {"$project": {"Badges.Name": 1,"pourcentage": {"$divide": ["$countBadge", userscount]}}}])
     if number == 8 :
-        data =  ''
+        db.UsersAvg.drop()
+        B = []
+        db.Posts.find({"Tags" :"prior"}, {"Comments.Id" :1, "_id":0}).forEach(function(Comments){B.push(Comments)})
+        C = []
+        for i in range(0, len(B)):
+            B_comments_len = len(B[i]["Comments"])
+            for j in range(0, B_comments_len):
+                C.push(NumberInt(B[i]["Comments"][j]["Id"]))
+        Result = db.Users.find({"CommentId" : {"$in" :  C},"Age":{"$gt":0}}, {"Id" : 1,"Age" :1,"_id":0} )
+        db.UsersAvg.insert(Result.toArray())
+        data =  db.UsersAvg.aggregate([{ $group : {_id : null, ageAverage : {$avg : "$Age"}}}])
     return data
 
 

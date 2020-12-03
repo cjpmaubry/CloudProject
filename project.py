@@ -62,7 +62,7 @@ def executeQueryNb(db,number):
             Tab.push(NumberInt(C[0]["CommentId"][i]["PostId"]))  
         data =  db.Posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1})
     if number == 5 :
-        timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input:"$CreaionDate", to :"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input :"$ClosedDate", to :"date"}}, {"$convert": { input :"$CreaionDate", to :"date"}}]}}} } }
+        timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input:"$CreaionDate", to:"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input:"$ClosedDate", to:"date"}}, {"$convert": { input:"$CreaionDate", to:"date"}}]}}} } }
         data =  db.Posts.aggregate([ {"$unwind":"$Tags"}, timeOpen, {"$group": {_id :"$Tags","maxTime": {"$max":"$timeOpen"} } }, {"$project": {"Tags": 1,"timeOpen": 1 ,"maxTime": 1 }} ])
     if number == 6 :
         data =  db.users.aggregate([{"$unwind":"$CommentId"}, {"$group": {"_id": {"Id":"$Id","DisplayName":"$DisplayName","UpVotes":"$UpVotes"} ,"totalComment": {"$sum": 1}  }  }, {"$project": {"Id":"$Id","DisplayName":"$DisplayName","note": {"$sum": ["$_id.UpVotes","totalComment"] }}}, {"$sort": {"note":-1}} ])
@@ -80,7 +80,7 @@ def executeQueryNb(db,number):
                 C.push(NumberInt(B[i]["Comments"][j]["Id"]))
         Result = db.Users.find({"CommentId": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} )
         db.UsersAvg.insert(Result.toArray())
-        data =  db.UsersAvg.aggregate([{"$group": {_id : null, ageAverage : {"$avg":"$Age"}}}])
+        data =  db.UsersAvg.aggregate([{"$group": {_id : null, ageAverage: {"$avg":"$Age"}}}])
     return data
 
 

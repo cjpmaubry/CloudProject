@@ -49,7 +49,7 @@ def executeQueryNb(db,number):
     if number == 2 :
         data =  db.users.find({"PostIds": {"$in": [X] }}, {"Badges": 1})
     if number == 3 :
-        data =  db.posts.find({"Title": {"$regex":"X"}}, {"_id":0,"Title": 1}).sort({"CommentCount": -1}).pretty()
+        data =  db.posts.find({"Title": {"$regex":"X"}}, {"_id":0,"Title": 1}).sort({"CommentCount": -1})
     if number == 4 :
         data =  ''
     if number == 5 :

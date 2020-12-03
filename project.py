@@ -5,12 +5,12 @@ from sshtunnel import SSHTunnelForwarder # pip install sshtunnel
 
 
 
-MONGO_HOST = "devicimongodb003.westeurope.cloudapp.azure.com"
-MONGO_USER = "administrateur"
-MONGO_PASS = "fcwP6h3H"
-MONGO_DB = "cloud"
-MONGO_COLLECTION_USERS = "users"
-MONGO_COLLECTION_POSTS = "posts"
+MONGO_HOST ="devicimongodb003.westeurope.cloudapp.azure.com"
+MONGO_USER ="administrateur"
+MONGO_PASS ="fcwP6h3H"
+MONGO_DB ="cloud"
+MONGO_COLLECTION_USERS ="users"
+MONGO_COLLECTION_POSTS ="posts"
 
 server = SSHTunnelForwarder(
     MONGO_HOST,
@@ -49,15 +49,16 @@ def executeQueryNb(db,number):
     if number == 2 :
         data =  db.Users.find({"PostIds": {"$in": [X] }}, {"Badges": 1})
     if number == 3 :
-        data =  ''
+        data =  db.Posts.find({"Title": {$regex :"X"}}, {"_id" :0,"Title": 1}).sort({"CommentCount": -1}).pretty()
     if number == 4 :
         data =  ''
     if number == 5 :
         data =  ''
     if number == 6 :
-        data =  ''
+        data =  db.Users.aggregate([{"$unwind":"$CommentId"}, { $group : {"_id": {"Id":"$Id","DisplayName":"$DisplayName","UpVotes":"$UpVotes"} ,"totalComment": {$sum : 1}  }  }, {$project : {"Id":"$Id","DisplayName":"$DisplayName","note": {$sum : ["$_id.UpVotes","totalComment"] }}}, { $sort : {"note":-1}} ])
     if number == 7 :
-        data =  ''
+        userscount = db.Users.count()
+        data =  db.Users.aggregate([{"$unwind":"$Badges"}, { $group : {"_id":"$Badges.Name","countBadge": {$sum : 1}}}, { $project : {"Badges.Name": 1,"pourcentage": {$divide : ["$countBadge", userscount]}}}])
     if number == 8 :
         data =  ''
     return data
@@ -152,5 +153,5 @@ def req8():
     return render_template('req.html',data = data, time = timer.interval )
 
 
-if __name__ == "__main__":
+if __name__ =="__main__":
     app.run()

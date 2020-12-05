@@ -20,9 +20,11 @@
                                 <br />
                             </tr>
                         {% elif req2 %}
+                            <ul>
                             {% for badge in x.Badges %}
-                                <p>Badge : {{badge['Name']}},&nbsp&nbsp&nbsp Date d'Obtention : {{badge['Date']}}</p>
+                                <li>Badge : {{badge['Name']}},&nbsp&nbsp&nbsp Date d'Obtention : {{badge['Date']}}</li>
                             {% endfor %}
+                            </ul>
                         {% elif req3 %}     
                             <td>Title : {{x.Title}}</td></br>
                             <p>{{x.Body}}</p>
@@ -31,7 +33,7 @@
                             <td>Score :{{x.Score}}</td>
                             </br>
                         {% elif req5 %}
-                            <td>Tag :  {{x._id}},</td>
+                            <td>Tag :  {{x._id}}, </td>
                             <td>Temps :  {{x.maxTime}}</td></br>
                             <!--<p>{{x}}</p>-->
                         {% elif req6 %}

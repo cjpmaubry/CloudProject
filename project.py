@@ -99,7 +99,18 @@ def home():
 
 @app.route('/adminView')
 def adminView():
-    return render_template('adminView.html')
+    server.start()
+    client = pymongo.MongoClient(MONGO_HOST, 30000)
+    shardsCount = client["config"]["shards"].count()
+    db = client[MONGO_DB]
+    dbadmin = client["admin"]
+    serverstats = db.command("dbStats")
+    lists_shards = dbadmin.command( "listShards" )
+
+    server.stop()
+
+    return render_template('adminView.html',shardsCount = shardsCount, serverstats=serverstats, lists_shards = lists_shards['shards'])
+    
     
 @app.route('/analystView')
 def analystView():

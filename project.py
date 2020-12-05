@@ -51,16 +51,7 @@ def executeQueryNb(db,number,parametre):
     if number == 3 :
         data =  db.posts.find({"Title": {"$regex": parametre }},{"_id":0,"Title": 1}).sort("CommentCount", -1)
     if number == 4 :
-        postUsers = db.Users.find({"Id": int(parametre)}, {"PostIds": 1,"CommentId.PostId": 1})
-        C = list(postUsers) # L'erreur est ici pas possible d'appliqué toArray à un cursor
-        Tab = []
-        C_len = len(C[0])
-        for i in range(0, C_len):
-            Tab.append(int(C[0]["PostIds"][i]))
-        C_len2 = len(C[0])
-        for i in range(0, C_len2):
-            Tab.append(int(C[0]["CommentId"][i]["PostId"]))
-        data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1})
+        https://github.com/cjpmaubry/CloudProject.git
     if number == 5 :
         #on ne peut definir timeOpen par lui meme. Faut chercher la syntaxe avec python
         timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input:"$CreaionDate", to:"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input:"$ClosedDate", to:"date"}}, {"$convert": { input:"$CreaionDate", to:"date"}}]}}} } }

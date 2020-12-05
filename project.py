@@ -54,10 +54,10 @@ def executeQueryNb(db,number,parametre):
         postUsers = db.Users.find({"Id": int(parametre)}, {"PostIds": 1,"CommentId.PostId": 1})
         C = list(postUsers) # L'erreur est ici pas possible d'appliqué toArray à un cursor
         Tab = []
-        C_len = C[0]["PostIds"].count()
+        C_len = len(C[0])
         for i in range(0, C_len):
             Tab.append(int(C[0]["PostIds"][i]))
-        C_len2 = C[0]["CommentId"].count()
+        C_len2 = len(C[0])
         for i in range(0, C_len2):
             Tab.append(int(C[0]["CommentId"][i]["PostId"]))
         data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1})
@@ -83,7 +83,9 @@ def executeQueryNb(db,number,parametre):
             B_comments_len = len(B[i])
             for j in range(0, B_comments_len):
                 C.append(B[i][j])
-        Result = db.Users.find({"CommentId": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} )
+        print(C)
+        Result = db.users.find({"CommentId": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} )
+        print(db.users.find({"CommentId": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} ))
         print(list(Result))
         db.create_collection("UsersAvg")
         db.UsersAvg.insert(list(Result)) 

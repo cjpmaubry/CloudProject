@@ -61,7 +61,7 @@ def executeQueryNb(db,number,parametre):
         for i in range(0, C_len2):
             Tab.append(int(C[0]["CommentId"][i]["PostId"]))
         data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1}) # bug au niveau de cette lignen probablement au niveau de ClosedDate
-        #message d'erreur : TypeError: if no direction is specified, key_or_list must be an instance of list 
+        #voici le message d'erreur : TypeError: if no direction is specified, key_or_list must be an instance of list 
     if number == 5 :
         #on ne peut definir timeOpen par lui meme. Faut chercher la syntaxe avec python
         timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input:"$CreaionDate", to:"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input:"$ClosedDate", to:"date"}}, {"$convert": { input:"$CreaionDate", to:"date"}}]}}} } }

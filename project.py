@@ -60,8 +60,8 @@ def executeQueryNb(db,number,parametre):
         C_len2 = len(C[0]["CommentId"])
         for i in range(0, C_len2):
             Tab.append(int(C[0]["CommentId"][i]["PostId"]))
-        data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1}) # bug au niveau de cette ligne bug non identifié
-        #voici le message d'erreur : TypeError: if no direction is specified, key_or_list must be an instance of list 
+        print(Tab)
+        data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort("Score", -1)
     if number == 5 :
         #on ne peut definir timeOpen par lui meme. Faut chercher la syntaxe avec python
         timeOpen = {"$addFields": { timeOpen: {"$switch": { branches: [ { case: {"ClosedDate":""}, then: {"$subtract": ["$$NOW", {"$convert": { input:"$CreaionDate", to:"date"} } ]}}, ], default: {"$subtract": [ {"$convert": { input:"$ClosedDate", to:"date"}}, {"$convert": { input:"$CreaionDate", to:"date"}}]}}} } }
@@ -75,20 +75,15 @@ def executeQueryNb(db,number,parametre):
         db.UsersAvg.drop()
         B = []
         _posts = db.posts.find({"Tags":parametre}, {"Comments.Id":1,"_id":0})
-        for i in range(_posts.count()): # Un cursor n'est pas un tableau donc on peu pas utiliser len -> fix
+        for i in range(_posts.count()): 
             B.append(_posts[i]["Comments"])
-        #.forEach(function(Comments){B.push(Comments)})
         C = []
-        print(B)
-        print("\n")
 
         for i in range(0, len(B)):
             B_comments_len = len(B[i])
             for j in range(0, B_comments_len):
                 C.append(B[i][j]["Id"])
-        print(C)
         Result = db.users.find({"CommentId.Id": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} )
-        print(str(Result))
 
         Result = list(Result)
         db.UsersAvg.insert(Result) 

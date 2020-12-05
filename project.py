@@ -122,9 +122,16 @@ def adminView():
         nbobject =  temp['shards'][doc]['count']
         listuser.append("Shard: "+ doc +"   nombre de doc : "+ str(nbobject)+ "    Taille Moyenne des objets: " + str(avgobject))
     
+    from pprint import pprint
+    # All Stats
+    liststat=[]
+    for doc in serverstats['raw']:
+        line = serverstats['raw']
+        liststat.append(line)
+
     server.stop()
 
-    return render_template('adminView.html',shardsCount = shardsCount, serverstats=serverstats, lists_shards = lists_shards['shards'], listpost = listpost, listuser =listuser)
+    return render_template('adminView.html',shardsCount = shardsCount, liststat=liststat, lists_shards = lists_shards['shards'], listpost = listpost, listuser =listuser)
     
     
 @app.route('/analystView')

@@ -40,5 +40,14 @@
 </tbody>
 <br />
 <br />
-<th>Stats:{{serverstats}}</th>
+<th>Toutes les Stats:</th>
+<br />
+<tbody>
+    {% for x in liststat %}
+        <tr>
+            <td>{{x}}</td>
+            <br />
+        </tr>
+    {% endfor %}
+</tbody>
 {% endblock %}

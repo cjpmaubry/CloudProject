@@ -9,8 +9,6 @@ MONGO_HOST ="devicimongodb003.westeurope.cloudapp.azure.com"
 MONGO_USER ="administrateur"
 MONGO_PASS ="fcwP6h3H"
 MONGO_DB ="cloud"
-MONGO_COLLECTION_USERS ="users"
-MONGO_COLLECTION_posts ="posts"
 
 server = SSHTunnelForwarder(
     MONGO_HOST,
@@ -126,8 +124,8 @@ def adminView():
     # All Stats
     liststat=[]
     for doc in serverstats['raw']:
-        line = serverstats['raw']
-        liststat.append(line)
+        line = serverstats['raw'][doc]
+        liststat.append(str(doc)+"--"+str(line))
 
     server.stop()
 

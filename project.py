@@ -60,7 +60,7 @@ def executeQueryNb(db,number,parametre):
         C_len2 = len(C[0]["CommentId"])
         for i in range(0, C_len2):
             Tab.append(int(C[0]["CommentId"][i]["PostId"]))
-        data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1}) # bug au niveau de cette lignen probablement au niveau de ClosedDate
+        data =  db.posts.find({"Id": {"$in": Tab},"ClosedDate":""},{"Id":1,"Title":1,"Score":1}).sort({"Score": -1}) # bug au niveau de cette ligne bug non identifié
         #voici le message d'erreur : TypeError: if no direction is specified, key_or_list must be an instance of list 
     if number == 5 :
         #on ne peut definir timeOpen par lui meme. Faut chercher la syntaxe avec python

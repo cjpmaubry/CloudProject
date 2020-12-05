@@ -1,25 +1,27 @@
 {% extends "header.html" %}
 {% block content %}
-<h2>Analyst View</h2>
-<nav>
-    <u1>
+<head>
+</head>
+<body>
+    <h2 class="text-light" >Analyst View</h2>
+    <ul class="text-light" >
         <li>
-            <a>Le post ayant la durée d'activité la plus longue par tag (pour le tag 1 c’est le post Y ; pour le tag 2 c’est le post X etc…)</a>
             <form action="/req5" method="post">
+                <label>Le post ayant la durée d'activité la plus longue par tag (pour le tag 1 c’est le post Y ; pour le tag 2 c’est le post X etc…)    </label>
                 <input type="submit" value="Submit">
             </form>
         </li>
         <br />
         <li>
-            <a>L'utilisateur le plus actif en prenant en considération le nombre de votes positifs et le nombre de commentaires</a>
             <form action="/req6" method="post">
+                <label>L'utilisateur le plus actif en prenant en considération le nombre de votes positifs et le nombre de commentaires     </label>
                 <input type="submit" value="Submit">
             </form>
         </li>
         <br />
         <li>
-            <a>Le pourcentage d’obtention de chaque badge </a>
             <form action="/req7" method="post">
+                <label>Le pourcentage d’obtention de chaque badge   </label>
                 <input type="submit" value="Submit">
             </form>
         </li>
@@ -32,6 +34,6 @@
                     <input type="submit" value="Submit">
                 </form>
         </li>
-    </u1>
-</nav>
+    </ul>
+</body>
 {% endblock %}

@@ -1,13 +1,37 @@
 {% extends "header.html" %}
 {% block content %}
 <h2>Admin View</h2>
-<th>Nombre de Shard:{{shardsCount}}</th>
+<th>Nombre de Shard: {{shardsCount}}</th>
 <br />
 <br />
 <th>Listes des shards:</th>
 <br />
 <tbody>
     {% for x in lists_shards %}
+        <tr>
+            <td>{{x}}</td>
+            <br />
+        </tr>
+    {% endfor %}
+</tbody>
+<br />
+<br />
+<td>Repartition de la collection Post:</td>
+<br />
+<tbody>
+    {% for x in listpost %}
+        <tr>
+            <td>{{x}}</td>
+            <br />
+        </tr>
+    {% endfor %}
+</tbody>
+<br />
+<br />
+<td>Repartition de la collection Users:</td>
+<br />
+<tbody>
+    {% for x in listuser %}
         <tr>
             <td>{{x}}</td>
             <br />

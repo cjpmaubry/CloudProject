@@ -106,10 +106,25 @@ def adminView():
     dbadmin = client["admin"]
     serverstats = db.command("dbStats")
     lists_shards = dbadmin.command( "listShards" )
-
+    #Posts
+    temp=db.command("collstats", "posts")
+    listpost=[]
+    for doc in temp['shards']:
+        avgobject = temp['shards'][doc]['avgObjSize']
+        nbobject =  temp['shards'][doc]['count']
+        listpost.append("Shard: "+ doc +"   nombre de doc : "+ str(nbobject)+ "    Taille Moyenne des objets: " + str(avgobject))
+    
+    #Users
+    temp=db.command("collstats", "users")
+    listuser=[]
+    for doc in temp['shards']:
+        avgobject = temp['shards'][doc]['avgObjSize']
+        nbobject =  temp['shards'][doc]['count']
+        listuser.append("Shard: "+ doc +"   nombre de doc : "+ str(nbobject)+ "    Taille Moyenne des objets: " + str(avgobject))
+    
     server.stop()
 
-    return render_template('adminView.html',shardsCount = shardsCount, serverstats=serverstats, lists_shards = lists_shards['shards'])
+    return render_template('adminView.html',shardsCount = shardsCount, serverstats=serverstats, lists_shards = lists_shards['shards'], listpost = listpost, listuser =listuser)
     
     
 @app.route('/analystView')

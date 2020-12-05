@@ -63,7 +63,7 @@ def executeQueryNb(db,number,parametre):
     if number == 5 :
         #on ne peut definir timeOpen par lui meme. Faut chercher la syntaxe avec python
         timeOpen = {"$addFields": { "timeOpen": {"$switch": { "branches": [ { "case": {"ClosedDate":""}, "then": {"$subtract": ["$$NOW", {"$convert": { "input":"$CreaionDate", "to":"date"} } ]}}, ], "default": {"$subtract": [ {"$convert": { "input":"$ClosedDate", "to":"date"}}, {"$convert": { "input":"$CreaionDate", "to":"date"}}]}}} } }
-        data =  db.posts.aggregate([ {"$unwind":"$Tags"}, timeOpen, {"$group": {"_id" :"$Tags","maxTime": {"$max":"$timeOpen"} } }, {"$project": {"Tags": 1,"timeOpen": 1 ,"maxTime": 1 }} ])
+        data =  db.posts.aggregate([ {"$unwind":"$Tags"}, timeOpen, {"$group": {"_id" :"$Tags","maxTime": {"$max":"$timeOpen"} } }, {"$project": {"Id": 1, "Tags": 1,"timeOpen": 1 ,"maxTime": 1 }} ])
     if number == 6 :
         data =  db.users.aggregate([{"$unwind":"$CommentId"}, {"$group": {"_id": {"Id":"$Id","DisplayName":"$DisplayName","UpVotes":"$UpVotes"} ,"totalComment": {"$sum": 1}  }  }, {"$project": {"Id":"$Id","DisplayName":"$DisplayName","note": {"$sum": ["$_id.UpVotes","totalComment"] }}}, {"$sort": {"note":-1}} ])
     if number == 7 :
@@ -207,8 +207,10 @@ def req6():
     timer = Timer()  
     timer.start()
     data= launchQuery(6,noparam)
+    listone=[]
+    listone.append(data.next())
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req6=True)
+    return render_template('req.html',data = listone, time = timer.interval, query_description= query_description, req6=True)
 
 
 @app.route('/req7',methods = ['POST'])

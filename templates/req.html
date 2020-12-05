@@ -31,9 +31,13 @@
                             <td>Score :{{x.Score}}</td>
                             </br>
                         {% elif req5 %}
-                            <p>{{x}}</p>
+                            <td>Tag :  {{x._id}},</td>
+                            <td>Temps :  {{x.maxTime}}</td></br>
+                            <!--<p>{{x}}</p>-->
                         {% elif req6 %}
-                            <p>{{x}}</p>
+                            <td>User_Id :  {{x._id.Id}}</td></br>
+                            <td>Name :  {{x._id.DisplayName}}</td></br>
+                            <td>Votes Positif :  {{x._id.UpVotes}}</td>
                         {% elif req7 %}
                             <td>{{x._id}} --></td>
                             <td>{{x.pourcentage}} %</td>

@@ -152,7 +152,7 @@ def req1():
     timer.start()
     data= launchQuery(1,id)
     timer.stop()
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description)
+    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req1 = True)
 
 
 @app.route('/req2',methods = ['POST'])
@@ -164,7 +164,7 @@ def req2():
     timer.start()
     data= launchQuery(2,id)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description)
+    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req2 = True)
 
 
 
@@ -177,7 +177,7 @@ def req3():
     timer.start()
     data= launchQuery(3,mot_clef)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description)
+    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req3 = True)
 
 
 
@@ -190,7 +190,7 @@ def req4():
     timer.start()
     data= launchQuery(4,id)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description)
+    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req4 = True)
 
 @app.route('/req5',methods = ['POST'])
 def req5():
@@ -200,7 +200,7 @@ def req5():
     timer.start()
     data= launchQuery(5,noparam)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description)
+    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req5=True)
 
 @app.route('/req6',methods = ['POST'])
 def req6():
@@ -210,7 +210,7 @@ def req6():
     timer.start()
     data= launchQuery(6,noparam)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description)
+    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req6=True)
 
 
 @app.route('/req7',methods = ['POST'])
@@ -221,7 +221,7 @@ def req7():
     timer.start()
     data= launchQuery(7,noparam)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description)
+    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req7=True)
 
 @app.route('/req8',methods = ['POST'])
 def req8():
@@ -232,7 +232,7 @@ def req8():
     timer.start()
     data= launchQuery(8,tag)
     timer.stop()  
-    return render_template('req.html',data = data, time = timer.interval, query_description= query_description)
+    return render_template('req.html',data = data, time = timer.interval, query_description= query_description, req8=True)
 
 
 if __name__ =="__main__":

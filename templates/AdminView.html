@@ -1,53 +1,55 @@
 {% extends "header.html" %}
 {% block content %}
-<h2>Admin View</h2>
-<th>Nombre de Shard: {{shardsCount}}</th>
-<br />
-<br />
-<th>Listes des shards:</th>
-<br />
-<tbody>
-    {% for x in lists_shards %}
-        <tr>
-            <td>{{x}}</td>
-            <br />
-        </tr>
-    {% endfor %}
-</tbody>
-<br />
-<br />
-<td>Repartition de la collection Post ( clé de sharding sur l'Id):</td>
-<br />
-<tbody>
-    {% for x in listpost %}
-        <tr>
-            <td>{{x}}</td>
-            <br />
-        </tr>
-    {% endfor %}
-</tbody>
-<br />
-<br />
-<td>Repartition de la collection Users ( clé de sharding sur l'Id):</td>
-<br />
-<tbody>
-    {% for x in listuser %}
-        <tr>
-            <td>{{x}}</td>
-            <br />
-        </tr>
-    {% endfor %}
-</tbody>
-<br />
-<br />
-<th>Toutes les Stats:</th>
-<br />
-<tbody>
-    {% for x in liststat %}
-        <tr>
-            <td>{{x}}</td>
-            <br />
-        </tr>
-    {% endfor %}
-</tbody>
-{% endblock %}
+<body class="text-light">
+    <h2>Admin View</h2>
+    <th>Nombre de Shard: {{shardsCount}}</th>
+    <br />
+    <br />
+    <th>Listes des shards:</th>
+    <br />
+    <tbody>
+        {% for x in lists_shards %}
+            <tr>
+                <td>{{x}}</td>
+                <br />
+            </tr>
+        {% endfor %}
+    </tbody>
+    <br />
+    <br />
+    <td>Repartition de la collection Post ( clé de sharding sur l'Id):</td>
+    <br />
+    <tbody>
+        {% for x in listpost %}
+            <tr>
+                <td>{{x}}</td>
+                <br />
+            </tr>
+        {% endfor %}
+    </tbody>
+    <br />
+    <br />
+    <td>Repartition de la collection Users ( clé de sharding sur l'Id):</td>
+    <br />
+    <tbody>
+        {% for x in listuser %}
+            <tr>
+                <td>{{x}}</td>
+                <br />
+            </tr>
+        {% endfor %}
+    </tbody>
+    <br />
+    <br />
+    <th>Toutes les Stats:</th>
+    <br />
+    <tbody>
+        {% for x in liststat %}
+            <tr>
+                <td>{{x}}</td>
+                <br />
+            </tr>
+        {% endfor %}
+    </tbody>
+    {% endblock %}
+</body>

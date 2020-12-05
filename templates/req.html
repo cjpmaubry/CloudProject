@@ -1,17 +1,19 @@
 {% extends "header.html" %}
 {% block content %}
-<th>{{query_description}}</th>
-<br />
-<br />
-<th>Temps d'execution : {{time}}</th>
-<br />
-<br />
-<tbody>
-    {% for x in data %}
-        <tr>
-            <td>{{x}}</td>
-            <br />
-        </tr>
-    {% endfor %}
-</tbody>
-{% endblock %}
+<body class="text-light">
+    <th>{{query_description}}</th>
+    <br />
+    <br />
+    <th>Temps d'execution : {{time}}</th>
+    <br />
+    <br />
+    <tbody>
+        {% for x in data %}
+            <tr>
+                <td>{{x}}</td>
+                <br />
+            </tr>
+        {% endfor %}
+    </tbody>
+    {% endblock %}
+</body>

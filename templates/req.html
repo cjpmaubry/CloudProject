@@ -8,11 +8,39 @@
     <br />
     <br />
     <tbody>
+        {% if req7 %}
+        <td>Badges & Pourcentages :</td>
+        </br>
+        {% endif %}
         {% for x in data %}
-            <tr>
-                <td>{{x}}</td>
-                <br />
-            </tr>
+                        {% if req1 %}
+                            <tr>
+                                <td>PostIds : {{x.PostIds}}</td></br>
+                                <td>CommentIds : {{x.CommentId}}</td>                 
+                                <br />
+                            </tr>
+                        {% elif req2 %}
+                            {% for badge in x.Badges %}
+                                <p>Badge : {{badge['Name']}},&nbsp&nbsp&nbsp Date d'Obtention : {{badge['Date']}}</p>
+                            {% endfor %}
+                        {% elif req3 %}     
+                            <td>Title : {{x.Title}}</td></br>
+                            <p>{{x.Body}}</p>
+                        {% elif req4 %}
+                            <td>Id : {{x.Id}} --></td>
+                            <td>Score :{{x.Score}}</td>
+                            </br>
+                        {% elif req5 %}
+                            <p>{{x}}</p>
+                        {% elif req6 %}
+                            <p>{{x}}</p>
+                        {% elif req7 %}
+                            <td>{{x._id}} --></td>
+                            <td>{{x.pourcentage}} %</td>
+                            </br>
+                        {% elif req8 %}
+                            <p>Age Moyen : {{x.ageAverage}} ans</p>
+                        {% endif %}
         {% endfor %}
     </tbody>
     {% endblock %}

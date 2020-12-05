@@ -49,7 +49,7 @@ def executeQueryNb(db,number,parametre):
     if number == 2 :
         data =  db.users.find({"PostIds": {"$in": [int(parametre)] }}, {"Badges": 1})
     if number == 3 :
-        data =  db.posts.find({"Title": {"$regex": parametre }},{"_id":0,"Title": 1}).sort("CommentCount", -1)
+        data =  db.posts.find({"$or": [{"Title": {"$regex": parametre }},{"Body": {"$regex": parametre }}]},{"_id":0,"Title": 1,"Body":1,"CommentCount":1}).sort("CommentCount", -1)
     if number == 4 :
         postUsers = db.users.find({"Id": int(parametre)}, {"PostIds": 1,"CommentId.PostId": 1})
         C = list(postUsers)

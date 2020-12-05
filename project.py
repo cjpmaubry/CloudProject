@@ -78,17 +78,18 @@ def executeQueryNb(db,number,parametre):
             B.append(_posts[i]["Comments"])
         #.forEach(function(Comments){B.push(Comments)})
         C = []
-        
+        print(B)
+        print("\n")
+
         for i in range(0, len(B)):
             B_comments_len = len(B[i])
             for j in range(0, B_comments_len):
-                C.append(B[i][j])
-        print(C)
-        Result = db.users.find({"CommentId": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} )
-        print(db.users.find({"CommentId": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} ))
+                C.append(B[i][j]["Id"])
+        
+        Result = db.users.find({"CommentId.Id": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} )
         print(list(Result))
-        db.create_collection("UsersAvg")
-        db.UsersAvg.insert(list(Result)) 
+        Result = list(Result)
+        db.UsersAvg.insert(Result) 
         data =  db.UsersAvg.aggregate([{"$group": {_id : null, ageAverage: {"$avg":"$Age"}}}])
         db.UsersAvg.drop()
     return data

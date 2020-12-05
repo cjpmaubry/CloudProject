@@ -85,12 +85,13 @@ def executeQueryNb(db,number,parametre):
             B_comments_len = len(B[i])
             for j in range(0, B_comments_len):
                 C.append(B[i][j]["Id"])
-        
+        print(C)
         Result = db.users.find({"CommentId.Id": {"$in":  C},"Age":{"$gt":0}}, {"Id": 1,"Age":1,"_id":0} )
-        print(list(Result))
+        print(str(Result))
+
         Result = list(Result)
         db.UsersAvg.insert(Result) 
-        data =  db.UsersAvg.aggregate([{"$group": {_id : null, ageAverage: {"$avg":"$Age"}}}])
+        data =  db.UsersAvg.aggregate([{"$group": {"_id" : "null", "ageAverage": {"$avg":"$Age"}}}])
         db.UsersAvg.drop()
     return data
 

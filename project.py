@@ -181,7 +181,7 @@ def req3():
 
 @app.route('/req4',methods = ['POST'])
 def req4():
-    query_description ="La liste des posts actifs pour un utilisateur, trié par le score du post (c’est-à-dire les posts qu'il a créé ou commenté et qui n’ont pas encore été fermés.) "
+    query_description ="La liste des posts actifs pour un utilisateur, triée par le score du post (c’est-à-dire les posts qu'il a créé ou commenté et qui n’ont pas encore été fermés.) "
     result = request.form
     id = result['id_user']
     timer = Timer()  
@@ -192,7 +192,7 @@ def req4():
 
 @app.route('/req5',methods = ['POST'])
 def req5():
-    query_description ="Le post ayant la durée d'activité la plus longue par tag (pour le tag 1 c’est le post Y ; pour le tag 2 c’est le post X etc…)  "
+    query_description ="Le post ayant la durée d'activité la plus longue par tag (pour le tag 1 c’est le post Y ; pour le tag 2 c’est le post X etc. …)  "
     noparam=""
     timer = Timer()  
     timer.start()
